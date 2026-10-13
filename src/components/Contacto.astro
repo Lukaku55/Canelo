@@ -1,0 +1,184 @@
+---
+import Icono from './Icono.astro';
+import { contacto, contactoTextos, cta, enlaceWhatsApp, servicios } from '../datos/sitio';
+---
+
+<section class="seccion contacto" id="contacto">
+	<div class="contenedor grilla">
+		<div>
+			<h2>{contactoTextos.titulo}</h2>
+			<p class="texto">{contactoTextos.texto}</p>
+			{
+				contacto.whatsapp && (
+					<a class="boton boton--claro directo" href={enlaceWhatsApp()}>
+						<Icono nombre="whatsapp-logo" />
+						Escribir por WhatsApp
+					</a>
+				)
+			}
+		</div>
+
+		<form class="formulario" data-whatsapp={contacto.whatsapp} novalidate>
+			<div class="campo">
+				<label for="nombre">Tu nombre</label>
+				<input id="nombre" name="nombre" type="text" autocomplete="name" required aria-describedby="error-nombre" />
+				<p class="error" id="error-nombre" hidden>Decinos tu nombre para saber con quién hablamos.</p>
+			</div>
+			<div class="campo">
+				<label for="negocio">Tu negocio</label>
+				<input id="negocio" name="negocio" type="text" autocomplete="organization" required aria-describedby="error-negocio" />
+				<p class="error" id="error-negocio" hidden>Contanos el nombre o el rubro del negocio.</p>
+			</div>
+			<div class="campo">
+				<label for="servicio">Qué te interesa</label>
+				<select id="servicio" name="servicio">
+					{servicios.map((s) => <option>{s.nombre}</option>)}
+					<option>Todavía no sé</option>
+				</select>
+			</div>
+			<div class="campo">
+				<label for="mensaje">Algo más que quieras contarnos <span>(opcional)</span></label>
+				<textarea id="mensaje" name="mensaje" rows="3"></textarea>
+			</div>
+			<button class="boton boton--claro" type="submit">
+				{cta}
+				<Icono nombre="arrow-right" />
+			</button>
+			<p class="estado" role="status"></p>
+		</form>
+	</div>
+</section>
+
+<script>
+	const form = document.querySelector<HTMLFormElement>('.formulario')!;
+	const estado = form.querySelector<HTMLElement>('.estado')!;
+	const obligatorios = ['nombre', 'negocio'];
+
+	const marcar = (campo: HTMLInputElement) => {
+		const falta = !campo.value.trim();
+		campo.setAttribute('aria-invalid', String(falta));
+		form.querySelector<HTMLElement>(`#error-${campo.name}`)!.hidden = !falta;
+		return falta;
+	};
+
+	obligatorios.forEach((nombre) => {
+		const campo = form.elements.namedItem(nombre) as HTMLInputElement;
+		campo.addEventListener('input', () => {
+			if (campo.getAttribute('aria-invalid') === 'true') marcar(campo);
+		});
+	});
+
+	form.addEventListener('submit', (e) => {
+		e.preventDefault();
+		const campos = obligatorios.map((n) => form.elements.namedItem(n) as HTMLInputElement);
+		const primeroConError = campos.filter(marcar)[0];
+		if (primeroConError) {
+			primeroConError.focus();
+			return;
+		}
+
+		const numero = form.dataset.whatsapp;
+		if (!numero) {
+			estado.textContent = 'Borrador: falta cargar el número de WhatsApp en src/datos/sitio.ts.';
+			return;
+		}
+
+		const d = new FormData(form);
+		const lineas = [
+			`Hola Canelo, soy ${d.get('nombre')} de ${d.get('negocio')}.`,
+			`Me interesa: ${d.get('servicio')}.`,
+			String(d.get('mensaje') ?? '').trim(),
+		].filter(Boolean);
+
+		window.open(`https://wa.me/${numero}?text=${encodeURIComponent(lineas.join('\n'))}`, '_blank', 'noopener');
+		estado.textContent = 'Abrimos WhatsApp con tu mensaje armado. Solo falta que lo envíes.';
+	});
+</script>
+
+<style>
+	.contacto {
+		background: var(--terracota);
+		color: var(--sobre-terracota);
+	}
+
+	.grilla {
+		display: grid;
+		gap: clamp(2.5rem, 5vw, 4rem);
+	}
+
+	.texto {
+		max-width: 36ch;
+		margin-top: 1.25rem;
+		font-size: 1.1875rem;
+	}
+
+	.directo {
+		margin-top: 2rem;
+	}
+
+	.formulario {
+		display: grid;
+		gap: 1.25rem;
+	}
+
+	.campo {
+		display: grid;
+		gap: 0.5rem;
+	}
+
+	label {
+		font-weight: 600;
+	}
+
+	label span {
+		font-weight: 400;
+	}
+
+	input,
+	select,
+	textarea {
+		width: 100%;
+		min-height: 3.25rem;
+		padding: 0.75rem 1rem;
+		border: 2px solid transparent;
+		border-radius: var(--radio-chico);
+		background: #fff6ef;
+		color: #2a1208;
+		font: inherit;
+	}
+
+	textarea {
+		resize: vertical;
+	}
+
+	input:focus-visible,
+	select:focus-visible,
+	textarea:focus-visible,
+	.contacto :global(.boton:focus-visible) {
+		outline-color: #fff6ef;
+	}
+
+	[aria-invalid='true'] {
+		border-color: #2a1208;
+	}
+
+	.error,
+	.estado {
+		font-weight: 600;
+	}
+
+	.estado:empty {
+		display: none;
+	}
+
+	.formulario .boton {
+		justify-self: start;
+	}
+
+	@media (min-width: 900px) {
+		.grilla {
+			grid-template-columns: 1fr 1fr;
+			align-items: start;
+		}
+	}
+</style>

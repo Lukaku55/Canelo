@@ -1,0 +1,68 @@
+---
+import Icono from './Icono.astro';
+import { preguntas } from '../datos/sitio';
+---
+
+<section class="seccion" id="preguntas">
+	<div class="contenedor angosto">
+		<h2>Preguntas frecuentes</h2>
+		<div class="lista">
+			{
+				preguntas.map((p) => (
+					<details>
+						<summary>
+							{p.pregunta}
+							<Icono nombre="plus" />
+						</summary>
+						<p>{p.respuesta}</p>
+					</details>
+				))
+			}
+		</div>
+	</div>
+</section>
+
+<style>
+	.angosto {
+		max-width: 52rem;
+	}
+
+	.lista {
+		margin-top: clamp(2rem, 4vw, 3rem);
+	}
+
+	details {
+		border-bottom: 1px solid var(--linea);
+	}
+
+	summary {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 1rem;
+		padding-block: 1.25rem;
+		font: 600 clamp(1.1875rem, 2vw, 1.4375rem) / 1.25 var(--display);
+		letter-spacing: -0.02em;
+		list-style: none;
+		cursor: pointer;
+	}
+
+	summary::-webkit-details-marker {
+		display: none;
+	}
+
+	summary :global(.icono) {
+		color: var(--terracota-texto);
+		transition: transform 220ms var(--salida);
+	}
+
+	details[open] summary :global(.icono) {
+		transform: rotate(45deg);
+	}
+
+	details p {
+		max-width: 62ch;
+		padding-bottom: 1.5rem;
+		color: var(--tinta-suave);
+	}
+</style>

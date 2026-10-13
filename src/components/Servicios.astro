@@ -1,0 +1,101 @@
+---
+import { servicios } from '../datos/sitio';
+---
+
+<section class="seccion" id="servicios">
+	<div class="contenedor">
+		<h2>Lo que hacemos</h2>
+		<p class="bajada">Cuatro servicios para arrancar. Elegís el que necesita tu negocio hoy.</p>
+
+		<ul class="mosaico">
+			{
+				servicios.map((s) => (
+					<li class="celda">
+						{s.etiqueta && <span class="etiqueta">{s.etiqueta}</span>}
+						<h3>{s.nombre}</h3>
+						<p>{s.texto}</p>
+					</li>
+				))
+			}
+		</ul>
+	</div>
+</section>
+
+<style>
+	.mosaico {
+		display: grid;
+		gap: 1rem;
+		margin: clamp(2.5rem, 5vw, 4rem) 0 0;
+		padding: 0;
+		list-style: none;
+	}
+
+	.celda {
+		display: flex;
+		flex-direction: column;
+		justify-content: flex-end;
+		gap: 0.75rem;
+		min-height: 15rem;
+		padding: clamp(1.5rem, 3vw, 2.5rem);
+		border-radius: var(--radio);
+		background: var(--papel-2);
+	}
+
+	.celda p {
+		max-width: 38ch;
+	}
+
+	.celda:nth-child(1) {
+		background: var(--terracota);
+		color: var(--sobre-terracota);
+	}
+
+	.celda:nth-child(1) h3 {
+		font-size: clamp(2rem, 4vw, 3.25rem);
+		letter-spacing: -0.035em;
+	}
+
+	.celda:nth-child(2) {
+		background: var(--oliva);
+		color: var(--sobre-oliva);
+	}
+
+	.celda:nth-child(4) {
+		background: transparent;
+		box-shadow: inset 0 0 0 2px var(--linea);
+	}
+
+	.etiqueta {
+		align-self: flex-start;
+		margin-bottom: auto;
+		padding: 0.25rem 0.75rem;
+		border-radius: 999px;
+		background: var(--tinta);
+		color: var(--papel);
+		font-size: 0.875rem;
+		font-weight: 600;
+	}
+
+	@media (min-width: 760px) {
+		.mosaico {
+			grid-template-columns: repeat(12, 1fr);
+		}
+
+		.celda:nth-child(1) {
+			grid-column: span 7;
+			min-height: 22rem;
+		}
+
+		.celda:nth-child(2) {
+			grid-column: span 5;
+		}
+
+		.celda:nth-child(3) {
+			grid-column: span 5;
+		}
+
+		.celda:nth-child(4) {
+			grid-column: span 7;
+		}
+	}
+</style>

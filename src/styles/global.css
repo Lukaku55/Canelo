@@ -1,0 +1,727 @@
+@import '@fontsource-variable/bricolage-grotesque';
+@import '@fontsource-variable/instrument-sans';
+
+:root {
+	color-scheme: light dark;
+
+	--papel: #eef0e2;
+	--papel-2: #e2e6d0;
+	--tinta: #1e2415;
+	--tinta-suave: #4a5238;
+	--linea: #c7ccb0;
+	--oliva: #4f5a2a;
+	--oliva-profundo: #2c3318;
+	--sobre-oliva: #eef0e2;
+	--sobre-oliva-suave: #d3d9b9;
+	--terracota: #b2441f;
+	--terracota-fuerte: #963615;
+	--sobre-terracota: #fff6ef;
+	--terracota-texto: #a63e1b;
+
+	--display: 'Bricolage Grotesque Variable', ui-sans-serif, system-ui, sans-serif;
+	--cuerpo: 'Instrument Sans Variable', ui-sans-serif, system-ui, sans-serif;
+
+	--radio: 20px;
+	--radio-chico: 12px;
+	--ancho: 1240px;
+	--margen: clamp(1.25rem, 4vw, 3rem);
+	--seccion: clamp(4.5rem, 10vw, 8.5rem);
+
+	--salida: cubic-bezier(0.23, 1, 0.32, 1);
+	--sombra: 0 18px 40px -18px rgb(44 51 24 / 0.45);
+
+	/* Capas: 10 encabezado, 20 menú del celular, 30 aviso de borrador */
+}
+
+@media (prefers-color-scheme: dark) {
+	:root {
+		--papel: #161a0f;
+		--papel-2: #1f2416;
+		--tinta: #eceedd;
+		--tinta-suave: #b3ba9a;
+		--linea: #3a4226;
+		--oliva: #3f4922;
+		--oliva-profundo: #0f1209;
+		--sobre-oliva: #eceedd;
+		--sobre-oliva-suave: #c5cca9;
+		--terracota: #b2441f;
+		--terracota-fuerte: #c9552c;
+		--terracota-texto: #ec8a63;
+		--sombra: 0 18px 40px -18px rgb(0 0 0 / 0.7);
+	}
+}
+
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+}
+
+html {
+	scroll-behavior: smooth;
+	scroll-padding-top: 5.5rem;
+	-webkit-text-size-adjust: 100%;
+	scrollbar-color: var(--oliva) var(--papel);
+}
+
+body {
+	margin: 0;
+	background: var(--papel);
+	color: var(--tinta);
+	font-family: var(--cuerpo);
+	font-size: 1.0625rem;
+	line-height: 1.6;
+	-webkit-font-smoothing: antialiased;
+	caret-color: var(--terracota);
+}
+
+::selection {
+	background: var(--terracota);
+	color: var(--sobre-terracota);
+}
+
+h1,
+h2,
+h3 {
+	margin: 0;
+	font-family: var(--display);
+	font-weight: 700;
+	line-height: 1.02;
+	letter-spacing: -0.035em;
+	text-wrap: balance;
+}
+
+h2 {
+	font-size: clamp(2.1rem, 5.2vw, 4rem);
+}
+
+h3 {
+	font-size: clamp(1.35rem, 2.2vw, 1.75rem);
+	letter-spacing: -0.025em;
+	line-height: 1.1;
+}
+
+p {
+	margin: 0;
+	text-wrap: pretty;
+}
+
+img {
+	display: block;
+	max-width: 100%;
+	height: auto;
+}
+
+a {
+	color: inherit;
+	text-underline-offset: 0.2em;
+	text-decoration-thickness: 0.08em;
+}
+
+:focus-visible {
+	outline: 3px solid var(--terracota-texto);
+	outline-offset: 3px;
+	border-radius: 6px;
+}
+
+.contenedor {
+	width: min(100% - 2 * var(--margen), var(--ancho));
+	margin-inline: auto;
+}
+
+.seccion {
+	padding-block: var(--seccion);
+}
+
+.bajada {
+	max-width: 46ch;
+	margin-top: 1.25rem;
+	color: var(--tinta-suave);
+	font-size: 1.125rem;
+}
+
+.icono {
+	display: inline-flex;
+	flex: none;
+}
+
+.icono svg {
+	width: 1.25em;
+	height: 1.25em;
+	fill: currentColor;
+}
+
+.boton {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 0.6rem;
+	min-height: 3.25rem;
+	padding: 0.75rem 1.5rem;
+	border: 2px solid transparent;
+	border-radius: 999px;
+	background: var(--terracota);
+	color: var(--sobre-terracota);
+	font: 600 1.0625rem/1.2 var(--cuerpo);
+	text-decoration: none;
+	white-space: nowrap;
+	cursor: pointer;
+	transition:
+		transform 160ms var(--salida),
+		background-color 200ms ease;
+}
+
+.boton:active {
+	transform: scale(0.97);
+}
+
+.boton--linea {
+	border-color: currentColor;
+	background: transparent;
+	color: var(--tinta);
+}
+
+.boton--claro {
+	background: var(--sobre-terracota);
+	color: #7c2a0e;
+}
+
+@media (hover: hover) and (pointer: fine) {
+	.boton:hover {
+		background: var(--terracota-fuerte);
+	}
+
+	.boton--linea:hover {
+		background: var(--tinta);
+		border-color: var(--tinta);
+		color: var(--papel);
+	}
+
+	.boton--claro:hover {
+		background: #ffffff;
+	}
+}
+
+.solo-lectores {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	overflow: hidden;
+	clip-path: inset(50%);
+	white-space: nowrap;
+}
+
+/* Aparición al entrar en pantalla: mejora progresiva, visible por defecto. */
+@media (prefers-reduced-motion: no-preference) {
+	@supports (animation-timeline: view()) {
+		.aparece {
+			animation: aparece linear both;
+			animation-timeline: view();
+			animation-range: entry 0% entry 55%;
+		}
+	}
+}
+
+@keyframes aparece {
+	from {
+		opacity: 0;
+		transform: translateY(28px);
+		filter: blur(6px);
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	html {
+		scroll-behavior: auto;
+	}
+
+	*,
+	*::before,
+	*::after {
+		animation-duration: 0.01ms !important;
+		animation-delay: 0ms !important;
+		transition-duration: 0.01ms !important;
+	}
+}
+
+/* =====================================================================
+   Efectos (src/scripts/efectos.ts). Todo cuelga de html.js: sin JavaScript
+   o con movimiento reducido, la página queda como estaba.
+   Capas extra: 5 textura, 40 aro del cursor.
+   ===================================================================== */
+
+:root {
+	interpolate-size: allow-keywords;
+}
+
+/* Textura sutil sobre toda la página */
+html.js body::after {
+	content: '';
+	position: fixed;
+	inset: 0;
+	z-index: 5;
+	pointer-events: none;
+	opacity: 0.07;
+	mix-blend-mode: soft-light;
+	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Lienzos generados */
+html.js .portada,
+html.js .base,
+html.js .contacto {
+	position: relative;
+	isolation: isolate;
+}
+
+.fondo-vivo,
+.particulas,
+.liquido {
+	position: absolute;
+	inset: 0;
+	width: 100%;
+	height: 100%;
+	pointer-events: none;
+}
+
+.fondo-vivo,
+.particulas {
+	z-index: -1;
+}
+
+.liquido {
+	opacity: 0;
+}
+
+.liquido.activo {
+	opacity: 1;
+}
+
+/* Progreso de lectura en el encabezado */
+html.js .encabezado::after {
+	content: '';
+	position: absolute;
+	inset: auto 0 0;
+	height: 2px;
+	background: var(--terracota-texto);
+	transform: scaleX(var(--progreso, 0));
+	transform-origin: left;
+}
+
+/* Menú: subrayado dinámico y sección activa */
+@media (min-width: 901px) {
+	html.js .enlaces a {
+		position: relative;
+	}
+
+	html.js .enlaces a::after {
+		content: '';
+		position: absolute;
+		inset: auto 0.9rem 0.35rem;
+		height: 2px;
+		background: var(--terracota-texto);
+		transform: scaleX(0);
+		transform-origin: right;
+		transition: transform 350ms var(--salida);
+	}
+
+	html.js .enlaces a[aria-current]::after {
+		transform: scaleX(1);
+		transform-origin: left;
+	}
+
+	@media (hover: hover) and (pointer: fine) {
+		html.js .enlaces a:hover::after {
+			transform: scaleX(1);
+			transform-origin: left;
+		}
+	}
+}
+
+@media (max-width: 900px) {
+	html.js .enlaces a {
+		opacity: 0;
+		transform: translateY(14px);
+		transition:
+			opacity 300ms var(--salida),
+			transform 450ms var(--salida);
+	}
+
+	html.js .abierto .enlaces a {
+		opacity: 1;
+		transform: none;
+	}
+
+	html.js .abierto .enlaces a:nth-child(2) {
+		transition-delay: 50ms;
+	}
+
+	html.js .abierto .enlaces a:nth-child(3) {
+		transition-delay: 100ms;
+	}
+
+	html.js .abierto .enlaces a:nth-child(4) {
+		transition-delay: 150ms;
+	}
+}
+
+html.js .menu .icono {
+	transition: transform 350ms var(--salida);
+}
+
+html.js .abierto .menu .icono {
+	transform: rotate(90deg);
+}
+
+/* Botones: brillo al pasar y onda al hacer clic */
+html.js .boton {
+	position: relative;
+	overflow: hidden;
+	isolation: isolate;
+}
+
+html.js .boton::before {
+	content: '';
+	position: absolute;
+	inset: 0;
+	z-index: -1;
+	background: linear-gradient(105deg, transparent 35%, rgb(255 255 255 / 0.24) 50%, transparent 65%);
+	transform: translateX(-120%);
+	transition: transform 750ms var(--salida);
+}
+
+html.js .boton::after {
+	content: '';
+	position: absolute;
+	left: var(--ox, 50%);
+	top: var(--oy, 50%);
+	z-index: -1;
+	width: 12px;
+	height: 12px;
+	margin: -6px;
+	border-radius: 50%;
+	background: currentColor;
+	opacity: 0;
+}
+
+html.js .boton.onda::after {
+	animation: onda 650ms var(--salida);
+}
+
+@keyframes onda {
+	from {
+		opacity: 0.3;
+		transform: scale(0.9);
+	}
+
+	to {
+		opacity: 0;
+		transform: scale(30);
+	}
+}
+
+@media (hover: hover) and (pointer: fine) {
+	html.js .boton:hover::before {
+		transform: translateX(120%);
+	}
+}
+
+.iman {
+	transition:
+		translate 450ms var(--salida),
+		transform 160ms var(--salida),
+		background-color 200ms ease,
+		color 200ms ease;
+}
+
+/* Aro que acompaña al cursor */
+.aro {
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 40;
+	width: 36px;
+	height: 36px;
+	margin: -18px;
+	border: 1.5px solid #fff6ef;
+	border-radius: 50%;
+	pointer-events: none;
+	mix-blend-mode: difference;
+	opacity: 0;
+	transition:
+		opacity 250ms ease,
+		scale 350ms var(--salida),
+		background-color 250ms ease;
+}
+
+.aro.activo {
+	opacity: 0.85;
+}
+
+.aro.sobre-enlace {
+	scale: 1.7;
+	background: rgb(255 246 239 / 0.14);
+}
+
+.aro.sobre-imagen {
+	scale: 2.3;
+}
+
+.aro.sobre-campo {
+	opacity: 0;
+}
+
+/* Inclinación 3D con brillo */
+.inclina {
+	position: relative;
+}
+
+.inclina::after {
+	content: '';
+	position: absolute;
+	inset: 0;
+	border-radius: inherit;
+	background: radial-gradient(circle at var(--bx, 50%) var(--by, 50%), rgb(255 255 255 / 0.2), transparent 55%);
+	opacity: 0;
+	pointer-events: none;
+	transition: opacity 350ms ease;
+}
+
+.inclina:hover::after {
+	opacity: 1;
+}
+
+html.js .celda,
+html.js .marco {
+	transition: transform 350ms var(--salida);
+}
+
+/* FAQ: apertura suave donde el navegador lo permite */
+html.js details::details-content {
+	block-size: 0;
+	overflow: clip;
+	transition:
+		block-size 450ms var(--salida),
+		content-visibility 450ms allow-discrete;
+}
+
+html.js details[open]::details-content {
+	block-size: auto;
+}
+
+/* Luz ambiental del bloque de contacto */
+html.js .contacto {
+	overflow: hidden;
+}
+
+html.js .contacto::before,
+html.js .contacto::after {
+	content: '';
+	position: absolute;
+	z-index: -1;
+	pointer-events: none;
+}
+
+html.js .contacto::before {
+	inset: 0;
+	background: radial-gradient(38rem circle at var(--lx, 78%) var(--ly, 18%), rgb(255 190 150 / 0.08), transparent 60%);
+}
+
+html.js .contacto::after {
+	left: -12rem;
+	bottom: -16rem;
+	width: 40rem;
+	height: 40rem;
+	border-radius: 50%;
+	background: radial-gradient(circle, rgb(70 22 6 / 0.38), transparent 65%);
+}
+
+/* ---------- Con movimiento ---------- */
+
+html.js:not(.quieto) .contacto::after {
+	animation: deriva 22s ease-in-out infinite alternate;
+}
+
+@keyframes deriva {
+	to {
+		transform: translate(55vw, -10rem) scale(1.25);
+	}
+}
+
+/* Títulos: palabra por palabra, detrás de una máscara */
+html.js:not(.quieto) .pal {
+	display: inline-block;
+	overflow: hidden;
+	margin-block: -0.14em;
+	padding-block: 0.14em;
+	vertical-align: top;
+}
+
+html.js:not(.quieto) .pal > span {
+	display: inline-block;
+	transform: translateY(115%) rotate(5deg);
+	transform-origin: left bottom;
+	transition: transform 1000ms var(--salida);
+	transition-delay: calc(var(--n, 0) * 70ms);
+}
+
+html.js:not(.quieto) .visto .pal > span {
+	transform: none;
+}
+
+html.js:not(.quieto) .hecho .pal {
+	overflow: visible;
+}
+
+html.js:not(.quieto) .letra {
+	display: inline-block;
+}
+
+/* Revelados */
+html.js:not(.quieto) [data-rev='sube'] {
+	opacity: 0;
+	transform: translateY(26px);
+	filter: blur(5px);
+	transition:
+		opacity 800ms var(--salida),
+		transform 900ms var(--salida),
+		filter 800ms var(--salida);
+	transition-delay: calc(120ms + var(--n, 0) * 70ms);
+}
+
+html.js:not(.quieto) [data-rev='lado'] {
+	opacity: 0;
+	transform: translateX(-28px);
+	transition:
+		opacity 700ms var(--salida),
+		transform 900ms var(--salida);
+	transition-delay: calc(var(--n, 0) * 80ms);
+}
+
+html.js:not(.quieto) [data-rev='sube'].visto,
+html.js:not(.quieto) [data-rev='lado'].visto {
+	opacity: 1;
+	transform: none;
+	filter: none;
+}
+
+html.js:not(.quieto) [data-rev='tarjeta'] {
+	/* El recorte inicial no es total: un elemento recortado por completo no se detecta al entrar en pantalla. */
+	opacity: 0;
+	clip-path: inset(70% 0 0 0 round var(--radio));
+	transition:
+		clip-path 1100ms var(--salida) calc(var(--n, 0) * 90ms),
+		opacity 500ms var(--salida) calc(var(--n, 0) * 90ms),
+		transform 350ms var(--salida);
+}
+
+html.js:not(.quieto) [data-rev='tarjeta'].visto {
+	opacity: 1;
+	clip-path: inset(0 round var(--radio));
+}
+
+html.js:not(.quieto) [data-rev='mascara'] {
+	opacity: 0;
+	clip-path: inset(0 0 70% 0 round var(--radio-chico));
+	transition:
+		clip-path 1300ms var(--salida),
+		opacity 500ms var(--salida),
+		transform 350ms var(--salida);
+}
+
+html.js:not(.quieto) [data-rev='mascara'] img {
+	transform: scale(1.25);
+	transition: transform 1700ms var(--salida);
+}
+
+html.js:not(.quieto) [data-rev='mascara'].visto {
+	opacity: 1;
+	clip-path: inset(0 round var(--radio-chico));
+}
+
+html.js:not(.quieto) [data-rev='mascara'].visto img {
+	transform: none;
+}
+
+html.js:not(.quieto) [data-rev='barrido'] {
+	opacity: 0;
+	clip-path: inset(0 75% 0 0);
+	transition:
+		clip-path 1100ms var(--salida) calc(var(--n, 0) * 90ms),
+		opacity 500ms var(--salida) calc(var(--n, 0) * 90ms);
+}
+
+html.js:not(.quieto) [data-rev='barrido'].visto {
+	opacity: 1;
+	clip-path: inset(0);
+}
+
+html.js:not(.quieto) [data-rev='letras'] .letra {
+	opacity: 0;
+	transform: translateY(45%);
+	transition:
+		opacity 600ms var(--salida),
+		transform 1100ms var(--salida);
+	transition-delay: calc(var(--n, 0) * 60ms);
+}
+
+html.js:not(.quieto) [data-rev='letras'].visto .letra {
+	opacity: 1;
+	transform: none;
+}
+
+/* Portada: abanico en 3D, con paralaje al desplazarse */
+html.js:not(.quieto) .abanico {
+	transform: perspective(1300px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+	transform-style: preserve-3d;
+}
+
+html.js:not(.quieto) .abanico .hoja {
+	transform: translate3d(
+			calc((var(--i) - 1) * 9%),
+			calc(var(--i) * 17% - var(--s, 0) * var(--i) * 34px),
+			calc(var(--i) * 46px)
+		)
+		rotate(calc((var(--i) - 1) * 5deg));
+}
+
+html.js .hoja::after {
+	content: '';
+	position: absolute;
+	inset: 0;
+	background: linear-gradient(120deg, rgb(255 255 255 / 0.14), transparent 40%);
+	pointer-events: none;
+}
+
+/* Los bloques de color se abren al entrar en pantalla */
+@media (prefers-reduced-motion: no-preference) {
+	@supports (animation-timeline: view()) {
+		html.js .base,
+		html.js .contacto {
+			animation: abre linear both;
+			animation-timeline: view();
+			animation-range: entry 0% entry 90%;
+		}
+	}
+}
+
+@keyframes abre {
+	from {
+		clip-path: inset(0 5% 0 5% round 3rem);
+	}
+
+	to {
+		clip-path: inset(0 0 0 0 round 0rem);
+	}
+}
+
+/* Abanico de la portada: la captura que se toca pasa al frente */
+html.js .abanico .hoja {
+	z-index: var(--i);
+	cursor: pointer;
+}
+
+/* La animación de entrada ya terminó: se apaga para que no se repita al reordenar. */
+html.js .abanico .hoja.movida {
+	animation: none;
+}

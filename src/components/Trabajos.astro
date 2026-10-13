@@ -1,0 +1,123 @@
+---
+import { Image } from 'astro:assets';
+import Icono from './Icono.astro';
+import { trabajos } from '../datos/sitio';
+---
+
+<section class="seccion trabajos" id="trabajos">
+	<div class="contenedor">
+		<h2>Trabajos</h2>
+		<p class="bajada">Tres rubros distintos, el mismo criterio: que el visitante entienda rápido y consulte.</p>
+
+		<ol class="pila">
+			{
+				trabajos.map((t, i) => (
+					<li class="ficha" style={`--i:${i}`}>
+						<div class="datos">
+							<p class="tipo">{t.tipo}</p>
+							<h3>{t.nombre}</h3>
+							<p class="rubro">{t.rubro}</p>
+							<p>{t.texto}</p>
+							{t.enlace && (
+								<a class="enlace" href={t.enlace.href} target="_blank" rel="noopener">
+									{t.enlace.texto}
+									<Icono nombre="arrow-up-right" />
+									<span class="solo-lectores">(abre en una pestaña nueva)</span>
+								</a>
+							)}
+						</div>
+						<div class="marco" data-liquido>
+							<Image
+								src={t.imagen}
+								alt={t.alt}
+								widths={[480, 800, 1200, 1440]}
+								sizes="(max-width: 900px) 92vw, 58vw"
+							/>
+						</div>
+					</li>
+				))
+			}
+		</ol>
+	</div>
+</section>
+
+<style>
+	.trabajos {
+		background: var(--papel-2);
+	}
+
+	.pila {
+		display: grid;
+		gap: 1.5rem;
+		margin: clamp(2.5rem, 5vw, 4rem) 0 0;
+		padding: 0;
+		list-style: none;
+	}
+
+	.ficha {
+		display: grid;
+		gap: 1.5rem;
+		padding: clamp(1.25rem, 2.5vw, 2rem);
+		border-radius: var(--radio);
+		background: var(--papel);
+		box-shadow: var(--sombra);
+	}
+
+	.marco {
+		position: relative;
+		align-self: start;
+		overflow: hidden;
+		border-radius: var(--radio-chico);
+	}
+
+	.ficha img {
+		width: 100%;
+	}
+
+	.datos {
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+	}
+
+	.datos h3 {
+		font-size: clamp(1.75rem, 3.4vw, 2.75rem);
+		letter-spacing: -0.035em;
+	}
+
+	.tipo {
+		color: var(--terracota-texto);
+		font-weight: 600;
+	}
+
+	.rubro {
+		margin-bottom: 0.75rem;
+		color: var(--tinta-suave);
+	}
+
+	.enlace {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.35rem;
+		align-self: flex-start;
+		min-height: 2.75rem;
+		margin-top: auto;
+		font-weight: 600;
+	}
+
+	@media (min-width: 900px) {
+		.ficha {
+			grid-template-columns: 1fr 1.6fr;
+			align-items: stretch;
+			gap: clamp(1.5rem, 3vw, 3rem);
+		}
+
+		/* Las fichas se apilan al desplazarse: cada una queda fija un poco más abajo que la anterior. */
+		@media (min-height: 640px) {
+			.ficha {
+				position: sticky;
+				top: calc(6rem + var(--i) * 1.25rem);
+			}
+		}
+	}
+</style>

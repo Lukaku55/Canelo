@@ -1,0 +1,165 @@
+---
+import Icono from './Icono.astro';
+import { cta, enlaceWhatsApp, navegacion, negocio } from '../datos/sitio';
+---
+
+<header class="encabezado">
+	<div class="contenedor barra">
+		<a class="marca" href="#contenido" aria-label={`${negocio.nombre}, inicio`}>canelo<span>.</span></a>
+
+		<nav class="enlaces" id="menu" aria-label="Principal">
+			{navegacion.map((item) => <a href={item.href}>{item.texto}</a>)}
+		</nav>
+
+		<a class="boton accion" href={enlaceWhatsApp()}>{cta}</a>
+
+		<button class="menu" type="button" aria-expanded="false" aria-controls="menu">
+			<span class="solo-lectores">Menú</span>
+			<span class="abrir"><Icono nombre="list" /></span>
+			<span class="cerrar"><Icono nombre="x" /></span>
+		</button>
+	</div>
+</header>
+
+<script>
+	const encabezado = document.querySelector('.encabezado')!;
+	const boton = encabezado.querySelector<HTMLButtonElement>('.menu')!;
+
+	const alternar = (abierto: boolean) => {
+		encabezado.classList.toggle('abierto', abierto);
+		boton.setAttribute('aria-expanded', String(abierto));
+	};
+
+	boton.addEventListener('click', () => alternar(boton.getAttribute('aria-expanded') !== 'true'));
+	encabezado.querySelectorAll('.enlaces a').forEach((a) => a.addEventListener('click', () => alternar(false)));
+	document.addEventListener('keydown', (e) => {
+		if (e.key === 'Escape') alternar(false);
+	});
+</script>
+
+<style>
+	.encabezado {
+		position: sticky;
+		top: 0;
+		z-index: 10;
+		background: color-mix(in srgb, var(--papel) 88%, transparent);
+		backdrop-filter: blur(14px);
+		-webkit-backdrop-filter: blur(14px);
+	}
+
+	.barra {
+		display: flex;
+		align-items: center;
+		gap: 1rem;
+		min-height: 4.5rem;
+	}
+
+	.marca {
+		display: inline-flex;
+		align-items: center;
+		min-height: 2.75rem;
+		margin-right: auto;
+		font: 800 1.75rem/1 var(--display);
+		letter-spacing: -0.05em;
+		text-decoration: none;
+	}
+
+	.marca span {
+		color: var(--terracota-texto);
+	}
+
+	.enlaces {
+		display: flex;
+		gap: 0.25rem;
+		margin-right: 0.75rem;
+	}
+
+	.enlaces a {
+		padding: 0.6rem 0.9rem;
+		border-radius: 999px;
+		font-weight: 500;
+		text-decoration: none;
+		transition: background-color 200ms ease;
+	}
+
+	.accion {
+		min-height: 2.75rem;
+		padding-block: 0.5rem;
+		font-size: 1rem;
+	}
+
+	.menu {
+		display: none;
+		place-items: center;
+		width: 2.75rem;
+		height: 2.75rem;
+		border: 0;
+		border-radius: 50%;
+		background: var(--papel-2);
+		color: var(--tinta);
+		font-size: 1.15rem;
+		cursor: pointer;
+	}
+
+	.cerrar,
+	.abierto .abrir {
+		display: none;
+	}
+
+	.abierto .cerrar {
+		display: inline-flex;
+	}
+
+	@media (hover: hover) and (pointer: fine) {
+		.enlaces a:hover {
+			background: var(--papel-2);
+		}
+	}
+
+	@media (max-width: 900px) {
+		.menu {
+			display: grid;
+		}
+
+		.enlaces {
+			position: absolute;
+			inset: 100% 0 auto;
+			z-index: 20;
+			flex-direction: column;
+			gap: 0;
+			margin: 0;
+			padding: 0.5rem var(--margen) 1.25rem;
+			background: var(--papel);
+			border-bottom: 1px solid var(--linea);
+			box-shadow: var(--sombra);
+			visibility: hidden;
+			opacity: 0;
+			transform: translateY(-8px);
+			transition:
+				opacity 180ms var(--salida),
+				transform 180ms var(--salida),
+				visibility 0s 180ms;
+		}
+
+		.abierto .enlaces {
+			visibility: visible;
+			opacity: 1;
+			transform: none;
+			transition-delay: 0s;
+		}
+
+		.enlaces a {
+			padding: 0.9rem 0;
+			border-radius: 0;
+			font: 600 1.5rem/1.2 var(--display);
+			letter-spacing: -0.02em;
+		}
+	}
+
+	@media (max-width: 420px) {
+		.accion {
+			padding-inline: 1rem;
+			font-size: 0.9375rem;
+		}
+	}
+</style>

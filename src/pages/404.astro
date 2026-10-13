@@ -1,0 +1,25 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<Base titulo="Página no encontrada | Canelo">
+	<main class="contenedor" id="contenido">
+		<h1>Esta página no existe.</h1>
+		<p>Puede que el enlace esté viejo o mal escrito.</p>
+		<a class="boton" href="/">Volver al inicio</a>
+	</main>
+</Base>
+
+<style>
+	main {
+		display: grid;
+		align-content: center;
+		justify-items: start;
+		gap: 1.5rem;
+		min-height: 100dvh;
+	}
+
+	h1 {
+		font-size: clamp(2.5rem, 7vw, 5rem);
+	}
+</style>

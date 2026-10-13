@@ -1,0 +1,81 @@
+---
+import Icono from './Icono.astro';
+import { contacto, navegacion, negocio } from '../datos/sitio';
+---
+
+<footer class="pie">
+	<div class="contenedor">
+		<p class="marca" aria-hidden="true">canelo<span>.</span></p>
+		<div class="fila">
+			<p>Diseño y desarrollo web. {negocio.zona}.</p>
+			<nav aria-label="Pie">
+				{navegacion.map((item) => <a href={item.href}>{item.texto}</a>)}
+			</nav>
+			<div class="canales">
+				{
+					contacto.email && (
+						<a href={`mailto:${contacto.email}`}>
+							<Icono nombre="envelope-simple" />
+							{contacto.email}
+						</a>
+					)
+				}
+				{
+					contacto.instagram && (
+						<a href={`https://www.instagram.com/${contacto.instagram}`} target="_blank" rel="noopener">
+							<Icono nombre="instagram-logo" />@{contacto.instagram}
+						</a>
+					)
+				}
+			</div>
+		</div>
+		<p class="legal">© {new Date().getFullYear()} {negocio.nombre}</p>
+	</div>
+</footer>
+
+<style>
+	.pie {
+		padding-block: clamp(3rem, 6vw, 5rem) 2rem;
+		background: var(--oliva-profundo);
+		color: var(--sobre-oliva);
+	}
+
+	.marca {
+		font: 800 clamp(5rem, 22vw, 17rem) / 0.8 var(--display);
+		letter-spacing: -0.06em;
+	}
+
+	.marca span {
+		color: #ec8a63;
+	}
+
+	.fila {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-between;
+		gap: 1.5rem 3rem;
+		margin-top: clamp(2.5rem, 5vw, 4rem);
+		padding-top: 1.5rem;
+		border-top: 1px solid rgb(238 240 226 / 0.25);
+	}
+
+	nav,
+	.canales {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.25rem 1.5rem;
+	}
+
+	a {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.4rem;
+		min-height: 2.75rem;
+	}
+
+	.legal {
+		margin-top: 2rem;
+		color: var(--sobre-oliva-suave);
+		font-size: 0.9375rem;
+	}
+</style>

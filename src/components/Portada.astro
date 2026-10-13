@@ -1,0 +1,140 @@
+---
+import { Image } from 'astro:assets';
+import Icono from './Icono.astro';
+import { cta, enlaceWhatsApp, portada, trabajos } from '../datos/sitio';
+---
+
+<section class="portada">
+	<div class="contenedor grilla">
+		<div class="texto">
+			<h1>{portada.titulo}</h1>
+			<p>{portada.texto}</p>
+			<div class="acciones">
+				<a class="boton" href={enlaceWhatsApp()}>
+					<Icono nombre="whatsapp-logo" />
+					{cta}
+				</a>
+				<a class="boton boton--linea" href="#trabajos">Ver trabajos</a>
+			</div>
+		</div>
+
+		<div class="abanico" aria-hidden="true">
+			{
+				trabajos.map((t, i) => (
+					<div class="hoja" style={`--i:${i}`} data-liquido>
+						<Image
+							src={t.imagen}
+							alt=""
+							widths={[480, 800, 1200]}
+							sizes="(max-width: 900px) 80vw, 46vw"
+							loading="eager"
+							fetchpriority={i === trabajos.length - 1 ? 'high' : 'auto'}
+						/>
+					</div>
+				))
+			}
+		</div>
+	</div>
+</section>
+
+<style>
+	.portada {
+		overflow: clip;
+		padding-block: clamp(2.5rem, 6vw, 5rem) clamp(4rem, 9vw, 7rem);
+	}
+
+	.grilla {
+		display: grid;
+		gap: clamp(3rem, 6vw, 4rem);
+		align-items: center;
+	}
+
+	h1 {
+		font-size: clamp(3rem, 8.2vw, 6rem);
+		font-weight: 800;
+		line-height: 0.94;
+		letter-spacing: -0.04em;
+	}
+
+	.texto p {
+		max-width: 34ch;
+		margin-top: 1.5rem;
+		color: var(--tinta-suave);
+		font-size: clamp(1.125rem, 1.6vw, 1.3125rem);
+		line-height: 1.5;
+	}
+
+	.acciones {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.75rem;
+		margin-top: 2.25rem;
+	}
+
+	.abanico {
+		position: relative;
+		aspect-ratio: 16 / 12.5;
+		margin-inline: 4%;
+	}
+
+	.hoja {
+		position: absolute;
+		inset: 0 0 auto;
+		overflow: hidden;
+		border-radius: var(--radio);
+		background: var(--oliva);
+		box-shadow: var(--sombra);
+		transform: translate(calc((var(--i) - 1) * 9%), calc(var(--i) * 17%)) rotate(calc((var(--i) - 1) * 5deg));
+		transition: transform 500ms var(--salida);
+	}
+
+	.hoja img {
+		width: 100%;
+	}
+
+	@media (hover: hover) and (pointer: fine) {
+		.abanico:hover .hoja {
+			transform: translate(calc((var(--i) - 1) * 12%), calc(var(--i) * 17%)) rotate(calc((var(--i) - 1) * 8deg));
+		}
+	}
+
+	@media (prefers-reduced-motion: no-preference) {
+		.texto > :not(h1) {
+			animation: sube 800ms var(--salida) both;
+		}
+
+		.texto > :nth-child(2) {
+			animation-delay: 70ms;
+		}
+
+		.texto > :nth-child(3) {
+			animation-delay: 140ms;
+		}
+
+		.hoja {
+			animation: reparte 1100ms var(--salida) both;
+			animation-delay: calc(200ms + var(--i) * 90ms);
+		}
+	}
+
+	@keyframes sube {
+		from {
+			opacity: 0;
+			transform: translateY(24px);
+		}
+	}
+
+	@keyframes reparte {
+		from {
+			opacity: 0;
+			transform: translateY(18%) rotate(0deg) scale(0.94);
+		}
+	}
+
+	@media (min-width: 900px) {
+		.grilla {
+			grid-template-columns: 1.05fr 1fr;
+			min-height: min(calc(100dvh - 12rem), 44rem);
+		}
+	}
+</style>

@@ -1,0 +1,40 @@
+---
+import Base from '../layouts/Base.astro';
+import Encabezado from '../components/Encabezado.astro';
+import Portada from '../components/Portada.astro';
+import Servicios from '../components/Servicios.astro';
+import Trabajos from '../components/Trabajos.astro';
+import Proceso from '../components/Proceso.astro';
+import Preguntas from '../components/Preguntas.astro';
+import Contacto from '../components/Contacto.astro';
+import Pie from '../components/Pie.astro';
+import { contacto } from '../datos/sitio';
+---
+
+<Base titulo="Canelo | Sitios web para negocios y pymes">
+	{
+		!contacto.whatsapp && (
+			<p class="borrador">Borrador: falta cargar WhatsApp, email e Instagram en src/datos/sitio.ts.</p>
+		)
+	}
+	<Encabezado />
+	<main id="contenido">
+		<Portada />
+		<Servicios />
+		<Trabajos />
+		<Proceso />
+		<Preguntas />
+		<Contacto />
+	</main>
+	<Pie />
+</Base>
+
+<style>
+	.borrador {
+		padding: 0.5rem var(--margen);
+		background: var(--tinta);
+		color: var(--papel);
+		font-size: 0.875rem;
+		text-align: center;
+	}
+</style>
