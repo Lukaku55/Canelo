@@ -82,6 +82,7 @@ export const trabajos = [
 		tipo: 'Propuesta de rediseño',
 		texto:
 			'Sitio institucional hecho de cero, pensado para llevar al visitante al contacto comercial.',
+		enlace: { texto: 'Ver la propuesta', href: 'https://frigorifico-sersale.vercel.app' },
 		imagen: sersale,
 		alt: 'Portada propuesta para Frigorífico Sersale, con salames de la marca de fondo.',
 	},
