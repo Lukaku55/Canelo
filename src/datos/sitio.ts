@@ -71,7 +71,7 @@ export const trabajos = [
 		rubro: 'Mudanzas y guardamuebles',
 		tipo: 'Sitio publicado',
 		texto:
-			'Páginas por servicio, guías por barrio, blog y pedido de presupuesto por WhatsApp.',
+			'Páginas por servicio, blog, versión en inglés y pedido de presupuesto por WhatsApp.',
 		enlace: { texto: 'mudanzasmarino.com.ar', href: 'https://www.mudanzasmarino.com.ar' },
 		imagen: marino,
 		alt: 'Portada del sitio de Marino Mudanzas, con un camión de la empresa de fondo.',
